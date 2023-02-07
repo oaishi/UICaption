@@ -13,11 +13,11 @@ from urllib.request import urlopen
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 import sys 
-from .utils import download_images
+from utils import download_images
 
 parser = argparse.ArgumentParser()
     
-#parser.add_argument("--i", help='Absolute path to the image url file.', required=True)
+parser.add_argument("-i", help='Absolute path to the image url file.', required=True)
 
 args = parser.parse_args()
 

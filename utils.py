@@ -94,6 +94,7 @@ def extract_images(website_urls, folder_path):
     for web_url in tqdm(website_urls):
         logging.info(f"Scraping : {web_url}")
         webpage_image_urls, webpage_image_alt_text, webpage_text_above, webpage_text_below, webpage_image_class_names = fetch_images(web_url)
+        
         time.sleep(1)
         # remove any duplicate images
         idx = 0
@@ -117,9 +118,11 @@ def extract_images(website_urls, folder_path):
                 idx += 1
         web_url_cntr += 1
         
-    
+        if web_url_cntr == 2: break
+        
+    print(image_urls)
     # Dump all image_urls
-    write_list(image_urls, os.path.join(folder_path, 'ui_images.p'))
+    write_list(image_urls, os.path.join(folder_path, 'ui_images.txt'))
 
     # Write the image url dictionaries
     write_dict(folder_path, img_url_to_caption, 'ui_alt_texts.csv', ['Image_Url', 'Image_Alt_Text'])
@@ -231,9 +234,10 @@ def download_images(image_urls, query_folder_path):
         writer = csv.DictWriter(csv_file, fieldnames=["Image_Url", "Image_Name"], delimiter='\t')
         idx = 0
         for image_url in tqdm(image_urls):
+            print(image_url)
             img_fname = ''
             if image_url not in img_url_to_img_id:
-                img_fname = persist_image(query_folder_path, image_url)
+                img_fname = persist_image(query_folder_path + "/images", image_url)
                 if img_fname == '':
                     continue
                 img_url_to_img_id[image_url] = img_fname
