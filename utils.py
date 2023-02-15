@@ -118,7 +118,7 @@ def extract_images(website_urls, folder_path):
                 idx += 1
         web_url_cntr += 1
         
-        if web_url_cntr == 2: break
+        if web_url_cntr == 200: break
         
     print(image_urls)
     # Dump all image_urls
